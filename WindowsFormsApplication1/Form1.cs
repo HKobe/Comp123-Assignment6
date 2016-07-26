@@ -7,7 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+/*
+ * Hassan Kobeissi - 300847239
+ * Date Created: 2016-07-26
+ */
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
