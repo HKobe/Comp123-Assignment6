@@ -16,5 +16,31 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            double impericalUnits;
+            double heightIninches = 0;
+            double weightInPounds = 0;
+            impericalUnits = weightInPounds * 703 / heightIninches * heightIninches;
+        }
+
+        private void MetricUnits_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+        }
     }
 }
