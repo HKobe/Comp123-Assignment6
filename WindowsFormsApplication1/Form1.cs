@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 /*
  * Hassan Kobeissi - 300847239
@@ -17,8 +18,13 @@ namespace WindowsFormsApplication1
     {
         public BMICalculatorWindow()
         {
+         
+
             InitializeComponent();
+
+            
         }
+       
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -32,6 +38,8 @@ namespace WindowsFormsApplication1
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             MetresLabel.Text = "Inches";
+            /*weightinPounds * 703* / heightinInches * heightinInches/
+            */
         }
         
         private void MetricUnits_CheckedChanged(object sender, EventArgs e)
@@ -39,11 +47,22 @@ namespace WindowsFormsApplication1
             MetresLabel.Text = "Meters";
 
         }
-
+        #region FirstTextBox(Height)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            //Create a reference to the sender object and tell C# its a button
+            Button buttonClicked = (Button)sender;
 
+            //read the string in the TextBox
+            string firstBox = HeightBox.Text;
+
+            //add text of button clicked to the currentResult
+            firstBox += buttonClicked.Text;
+
+            //update the ResultTextBox
+            HeightBox.Text = firstBox;
         }
+        #endregion
 
         private void MyWeight_Click(object sender, EventArgs e)
         {
@@ -59,62 +78,79 @@ namespace WindowsFormsApplication1
         {
 
         }
-
+        #region Submit Button
+        /// <summary>
+        /// Submits inputed info and displays to text box
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SubmitButton_Click(object sender, EventArgs e)
         {
-            double BMI, weight, metres, inches, height;
-            //Results of the attempt to calc BMI
-            string results = ""; 
-            //Form Valid,  not empty, or in number format.
-            bool isValid = true;
-            if (!double.TryParse(MyWeightTextBox.Text, out weight))
-            {
-                results += "\nPlease enter your weight in a Numerical Format.";
-                isValid = false;
-            }
-            if (!double.TryParse(MetresBox.Text, out metres))
-            {
-                results += "\nPlease enter your feet in Numerical Format.";
-                isValid = false;
-            }
-            if (!double.TryParse(MetresBox.Text, out inches))
-            {
-                results += "\nPlease enter your feet in Numerical Format.";
-                isValid = false;
-            }
-            if(isValid)
-            {
-                //Calc total height  in  metres
-                height = metres * .3 + inches;
-            }
-            else
-            {
+            #region calculations
+            var weight = Convert.ToDouble(WeightBox.Text);
+            var height = Convert.ToDouble(HeightBox.Text);
+            var bmiPounds = weight * 703 / height * height;
+            var bmi = weight / height * height ;
+            var bmi1 = String.Format("{0:0.00}", bmi);
+            ResultBox.Text = bmi1;
+            #endregion
 
+            #region BMI SCALE and RESULT
+            if(bmi < 18.5)
+            {
+                Console.WriteLine("Underweight");
             }
+            if(bmi == 18.5 && bmi <= 25)
+            {
+                Console.WriteLine("Normal");
+            }
+            if(bmi == 25 && bmi <= 29.9)
+            {
+                Console.WriteLine("Overweight :(");
+            }
+            if(bmi >= 30)
+            {
+                Console.WriteLine("Obese!");
+            }
+            #endregion
         }
+        #endregion
 
+        #region Clear Button
+        /// <summary>
+        /// Clears Calculator
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ClearButton_Click(object sender, EventArgs e)
         {
-            MyWeightTextBox.Text = "";
-            MetresBox.Text = "";
+            WeightBox.Text = "";
+            HeightBox.Text = "";
             ResultBox.Text = "";
             
         }
-
-        private void button5_Click(object sender, EventArgs e)
+        #endregion
+        #region CalculatorButton_Click
+        private void CalculatorButton_Click(object sender, EventArgs e)
         {
+            //Create a reference to the sender object and tell C# its a button
+            Button buttonClicked = (Button)sender;
+            //read the string in the TextBox          
+          
+            //string secondBox = MyWeightTextBox.Text;
+
+            string finalResult = ResultBox.Text;
+            //add text of button clicked to the currentResult
+           // secondBox += buttonClicked.Text;
+            finalResult += buttonClicked.Text;
+            //update the ResultTextBox
+           // MyWeightTextBox.Text = secondBox;
+            ResultBox.Text = finalResult;
 
         }
+        #endregion
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (MetresBox.Focused == true)
-            {
-                MetresBox.Text = MetresBox.Text + 0;
-            }
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void ResultBox_TextChanged(object sender, EventArgs e)
         {
 
         }
